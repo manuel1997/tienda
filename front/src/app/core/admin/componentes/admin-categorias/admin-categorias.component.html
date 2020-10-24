@@ -1,0 +1,81 @@
+<div class="container">
+    <div class="col-md-12 mx-auto">
+        <button type="button" class="btn btn-info btn-rounded float-right" data-toggle="modal" data-target="#insertModal" >Nueva<i class="fa fa-plus"></i></button>
+        <h3 class="border-bottom border-gray pb-2 mb-4">Administrar Categorias</h3>
+                <table class="table col-md-9 mx-auto">
+                    <thead class="thead-dark">
+                      <tr>
+                        <th scope="col">Nro</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Edit/Elim</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let catg of categorias; let i = index">
+                        <th scope="row">{{i+1}}</th>
+                        <td>{{catg.nombre}}</td>
+                        <td>
+                            <div  class="btn-group">
+                                <button  (click)="verModal(catg.nombre,catg.id)"  class="btn btn-warning btn-sm" title="Editar"><i class="fa fa-pencil"></i></button>
+                                <button (click)="eliminarCategoria(catg.id)" class="btn btn-danger btn-sm" title="Eliminar"><i  class="fa fa-trash"></i></button>
+                            </div>
+                        </td>        
+                      </tr>
+                    </tbody>
+                  </table>
+            </div>   
+        </div>
+
+
+            <!-- Modal -->
+            <div class="modal fade" id="insertModal" tabindex="-1" role="dialog" aria-labelledby="insertModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="insertModalLabel">Nueva categoria</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                        <form (ngSubmit)="nuevaCategoria()">
+                            <div class="container">
+                                <div class="row">
+                            <input  type="text" [(ngModel)]="form.nombre" name="nombre" placeholder="nombre de categoria" class="form-control" >
+                        </div>
+                        </div>
+                            <button class="btn btn-primary mt-3">Agregar</button>
+                          </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+         <!-- Modal -->
+        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="editModalLabel">Editar categoria</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <form (ngSubmit)="editarCategoria(form.id)">
+                        <div class="container">
+                            <div class="row">
+                        <input id="edit" type="text" [(ngModel)]="form.nombre_edit" name="nombre_edit" class="form-control" >
+                    </div>
+                    </div>
+                        <button class="btn btn-primary mt-3">Editar</button>
+                      </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        
+          

@@ -1,0 +1,71 @@
+<div class="container">
+    <div class="col-md-12 mx-auto">
+        <div class="card text-center">
+            <div class="card-header">
+                <h3>Nuevo Producto</h3>
+            </div>
+            <div class="card-body">
+                <form (ngSubmit)="agregar()">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <input type="text" [(ngModel)]="product.titulo"  name="titulo" class="form-control" placeholder="Titulo" autofocus>
+                            </div>
+                            <div class="form-group">
+                              <select class="custom-select" [(ngModel)]="product.categoria"  name="categoria">
+                                <option value="0" >Seleccione una Categoria</option>
+                                <option value="1">telefonos</option>
+                                <option value="2">computadoras</option>
+                                <option value="3">electronica</option>
+                              </select>
+                            </div>
+                            <div class="form-group">
+                                <textarea type="text" [(ngModel)]="product.especificaciones" name="especificaciones" class="form-control"
+                                    placeholder="Especificaciones"></textarea>
+                            </div>
+                            <div class="form-group">
+                                    <div class="input-group">
+                                      <div class="input-group-prepend">
+                                        <div class="input-group-text">$</div>
+                                      </div>
+                                      <input type="number" [(ngModel)]="product.precio" name="precio" class="form-control" placeholder="Precio">
+                                    </div>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="number" [(ngModel)]="product.stock" name="stock" class="form-control" placeholder="Stock">
+                            </div>
+
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="image-upload">
+                                <label for="file-input">
+                                  <div class="btn btn-info btn-block"><i class="text-white fa fa-cloud-upload fa-2x"></i> Subir imagen</div>
+                                </label>
+                                    <input id="file-input" type="file"  multiple [(ngModel)]="product.images" name="images" (change)="selectImg($event)"/>
+                            </div>
+                            <div class="row">
+                                <div *ngFor='let url of urls' class="col-3">
+                                    <img [src]="url" class="img-fluid" >
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <textarea type="text" [(ngModel)]="product.descripcion" name="descripcion" class="form-control"
+                            placeholder="Descripcion"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <button class="btn btn-info btn-block ">
+                            Agregar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
