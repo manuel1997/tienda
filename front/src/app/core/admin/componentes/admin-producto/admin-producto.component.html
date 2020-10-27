@@ -3,56 +3,24 @@
     <button routerLink="/admin/nuevo-producto" class="btn btn-info btn-rounded float-right">Nuevo <i class="fa fa-plus"></i></button>
     <h3 class="border-bottom border-gray pb-2 mb-4">Lista de Productos</h3>
     
-   <div class="row mb-3">
+   <div *ngFor="let product of products" class="row mb-3">
     <div class="col-md-2">
       <a href="#">
-        <img class="img-fluid" src="assets/images/product_8.jpg" width="150" >
+        <img class="img-fluid" src="http://localhost:3000/uploads/{{product.nombre_img}}" width="150" >
       </a>
     </div>
     <div class="col-md-10">
-      <h4>Project One</h4>
+      <h4>{{product.titulo}}</h4>
       <ul>
-        <li><b>Precio: </b>$500</li>
-        <li><b>stock: </b>60</li>
-        <li><b>Descripcion:</b> Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi fugit, praesentium expedita possimus vitae aliquid quibusdam et harum sequi.</li>
+        <li><b>Precio: </b>${{product.precio}}</li>
+        <li><b>stock: </b>{{product.stock}}</li>
+        <li><b>Descripcion: </b>{{product.descripcion}}</li>
         <li>
           <div  role="group" class="btn-group float-right">
-            <button title="Editar" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></button>
-             <button title="Eliminar" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+            <button (click)="editProduct(product.id)"  class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></button>
+             <button (click)="eliminarProduct(product.id)" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
             </div>
         </li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="row mb-3">
-    <div class="col-md-2">
-      <a href="#">
-        <img class="img-fluid" src="assets/images/product_4.jpg" width="150" >
-      </a>
-    </div>
-    <div class="col-md-10">
-      <h4>Project One</h4>
-      <ul>
-        <li><b>Precio: </b>$500</li>
-        <li><b>stock: </b>60</li>
-        <li><b>Descripcion:</b> Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi fugit, praesentium expedita possimus vitae aliquid quibusdam et harum sequi.</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-2">
-      <a href="#">
-        <img class="img-fluid" src="assets/images/product_1.jpg" width="150">
-      </a>
-    </div>
-    <div class="col-md-10">
-      <h4>Project One</h4>
-      <ul>
-        <li><b>Precio: </b>$500</li>
-        <li><b>stock: </b>60</li>
-        <li><b>Descripcion:</b> Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi fugit, praesentium expedita possimus vitae aliquid quibusdam et harum sequi.</li>
       </ul>
     </div>
   </div>

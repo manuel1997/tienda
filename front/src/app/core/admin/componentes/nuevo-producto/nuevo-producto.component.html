@@ -9,14 +9,15 @@
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="form-group">
-                                <input type="text" [(ngModel)]="product.titulo"  name="titulo" class="form-control" placeholder="Titulo" autofocus>
+                                <input type="text" [(ngModel)]="product.titulo"  name="titulo" class="form-control is-invalid" placeholder="Titulo" autofocus>
+                                <div class="invalid-feedback">
+                                   Por favor rellena este campo
+                                  </div>
                             </div>
                             <div class="form-group">
                               <select class="custom-select" [(ngModel)]="product.categoria"  name="categoria">
                                 <option value="0" >Seleccione una Categoria</option>
-                                <option value="1">telefonos</option>
-                                <option value="2">computadoras</option>
-                                <option value="3">electronica</option>
+                                <option *ngFor="let categoria of categorias" value="{{categoria.id}}">{{categoria.nombre}}</option>
                               </select>
                             </div>
                             <div class="form-group">
@@ -24,12 +25,7 @@
                                     placeholder="Especificaciones"></textarea>
                             </div>
                             <div class="form-group">
-                                    <div class="input-group">
-                                      <div class="input-group-prepend">
-                                        <div class="input-group-text">$</div>
-                                      </div>
-                                      <input type="number" [(ngModel)]="product.precio" name="precio" class="form-control" placeholder="Precio">
-                                    </div>
+                                <input type="number" [(ngModel)]="product.precio" name="precio" class="form-control" placeholder="Precio">
                             </div>
 
                             <div class="form-group">

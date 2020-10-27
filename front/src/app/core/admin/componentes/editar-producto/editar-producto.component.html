@@ -1,0 +1,69 @@
+<div class="container" *ngIf="!product[0]; else main_content">
+    <h1>loading....</h1>
+</div>
+
+<ng-template #main_content>
+<div class="container">
+    <div class="col-md-12 mx-auto">
+        <div class="card text-center">
+            <div class="card-header">
+                <h3>Editar Producto</h3>
+            </div>
+            <div class="card-body">
+                <form (ngSubmit)="actualizarProduct()">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <input type="text" [(ngModel)]="product[0].titulo"  name="titulo" class="form-control" placeholder="Titulo">
+                            </div>
+                            <div class="form-group">
+                              <select class="custom-select" [(ngModel)]="product[0].categoria"  name="categoria">
+                                <option value="0" >Seleccione una Categoria</option>
+                                <option *ngFor="let categoria of categorias" value="{{categoria.id}}">{{categoria.nombre}}</option>
+                              </select>
+                            </div>
+                            <div class="form-group">
+                                <textarea type="text" [(ngModel)]="product[0].especificaciones" name="especificaciones" class="form-control"
+                                    placeholder="Especificaciones"></textarea>
+                            </div>
+                            <div class="form-group">
+                                    <div class="input-group">
+                                      <div class="input-group-prepend">
+                                        <div class="input-group-text">$</div>
+                                      </div>
+                                      <input type="number" [(ngModel)]="product[0].precio" name="precio" class="form-control" placeholder="Precio">
+                                    </div>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="number" [(ngModel)]="product[0].stock" name="stock" class="form-control" placeholder="Stock">
+                            </div>
+
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="row">
+                                 <div *ngFor='let img of images' class="col-3">
+                                    <img src="http://localhost:3000/uploads/{{img.nombre_img}}" class="img-fluid" >
+                                </div> 
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <textarea type="text" [(ngModel)]="product[0].descripcion" name="descripcion" class="form-control"
+                            placeholder="Descripcion"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <button class="btn btn-info btn-block ">
+                            Editar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</ng-template>

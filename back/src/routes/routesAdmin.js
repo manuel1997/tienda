@@ -15,7 +15,7 @@ router.delete('/api/eliminarBanner/:id',eliminarBanner);
 
 const {listProduct,insertProduct,editProduct,actualizarProduct,deleteProduct} = require('../controllers/admin/productos'); 
 
-router.get('/api/list',listProduct);
+router.get('/api/listProduct',listProduct);
 router.post('/api/insertProduct',insertProduct);
 router.get('/api/editProduct/:id',editProduct);
 router.put('/api/actualizarProduct/:id',actualizarProduct);

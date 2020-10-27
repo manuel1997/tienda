@@ -8,16 +8,12 @@ const mysqlConecction = require('../../db');
 
 productController.listProduct = async (req,res) =>{
     
-    const sql = `SELECT productos.id, productos.categoria, productos.especificaciones, productos.stock, productos.precio, productos.descripcion, productos.createAt, productos_img.nombre_img 
+    const sql = `SELECT productos.*, productos_img.nombre_img 
     FROM productos 
     INNER JOIN productos_img on productos.id = productos_img.id GROUP BY productos.id`
     mysqlConecction.query(sql, (error,result) => {
         if(error) throw error;
-        if(result.length > 0){
-            res.json(result)
-        }else{
-            res.send('No hay resultados');
-        }
+        res.json(result)
     })
 
 }
@@ -75,7 +71,8 @@ productController.editProduct = async (req,res) => {
         const sql2 = `select * from  productos_img where id = ${id}`
         mysqlConecction.query(sql2,(error,result2) => {
             if(error) throw error;
-            res.json([result,result2]);
+
+            res.json({result,result2});
         })
     })
 
@@ -84,12 +81,14 @@ productController.editProduct = async (req,res) => {
 
 productController.actualizarProduct = async (req,res) =>{
 
+    const { id } = req.params;
+
     const { titulo, categoria, especificaciones, stock, precio, descripcion} = req.body;
     const producto = { titulo, categoria, especificaciones, stock, precio, descripcion}
-    const sql = `update productos set ?`;
+    const sql = `update productos set ? where id = ${id}`;
     await mysqlConecction.query(sql,producto, error => {
         if(error) throw error;
-        res.send('producto atualizado');
+        res.json('producto atualizado');
     })
 
 }
@@ -108,11 +107,11 @@ productController.deleteProduct = async (req, res) => {
             results.map(r => {
                 fs.unlinkSync(path.resolve('./src/public/uploads/' + r.nombre_img));
             })
-
+            
             const sql3 = `delete from productos_img  where id = ${id}`;
             mysqlConecction.query(sql3, error => {
                 if (error) throw error;
-                res.send('producto eliminado')
+                res.json('producto eliminado')
             })
         })
     })

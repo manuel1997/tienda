@@ -27,4 +27,16 @@ export class ProductoService {
     return this.http.get<any>(this.api+'listProduct');
   }
 
+  verProducto(id){
+    return this.http.get<any>(this.api+'editProduct/'+id);
+  }
+
+  actualizarProduct(id,product){
+    return this.http.put<any>(this.api+'actualizarProduct/'+id,product)
+  }
+
+  eliminarProduct(id){
+    return this.http.delete<any>(this.api+'deleteProduct/'+id)
+  }
+
 }

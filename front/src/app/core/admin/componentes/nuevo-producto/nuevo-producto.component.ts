@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ProductoService} from "../../servicios/producto.service";
+import {CategoriaService} from "../../servicios/categoria.service";
 
 @Component({
   selector: 'app-nuevo-producto',
@@ -12,11 +13,28 @@ export class NuevoProductoComponent implements OnInit {
   filelist:any;
   urls = [];
 
-  product:any = {}
+  product:any = {
+    categoria:'0'
+  }
+  categorias = [];
 
-  constructor(private productService:ProductoService) { }
+  constructor(
+    private productService:ProductoService,
+    private categService:CategoriaService
+    ) { }
 
   ngOnInit() {
+    this.listCategoria();
+  }
+
+  listCategoria(){
+    this.categService.listCategoria(this.categorias)
+    .subscribe(
+      res =>{
+        this.categorias = res;
+      },
+      err => console.log(err)
+    )
   }
 
   selectImg(event):void {
@@ -41,9 +59,8 @@ export class NuevoProductoComponent implements OnInit {
      this.productService.nuevoProducto(this.filelist,this.product)
        .subscribe(
         res =>{
-          this.product = res;
+          this.product = {};
           this.urls = [];
-          console.log(this.product)
         },
         err => console.log(err)
       )   
