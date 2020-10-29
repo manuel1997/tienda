@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CategoriaService } from '../../../admin/servicios/categoria.service'
 
 declare var $: any;
@@ -12,16 +13,18 @@ declare var $: any;
 
 export class AdminCategoriasComponent implements OnInit {
 
+  id:number;
+  submit = false;
 
   categorias = []
 
-  form = {
-    id:'',
-    nombre:'',
-    nombre_edit:''
-  }
+  formCateg = new FormGroup({
+    nombre: new FormControl('',Validators.required),
+  })
 
-
+  formCategEdit = new FormGroup({
+    nombre_edit: new FormControl('',Validators.required)
+  })
 
   constructor(private catgService: CategoriaService) { }
 
@@ -40,14 +43,19 @@ export class AdminCategoriasComponent implements OnInit {
   }
 
   nuevaCategoria() {
-    this.catgService.nuevaCategoria(this.form)
+    this.submit = true;
+    if(!this.formCateg.invalid){
+      this.catgService.nuevaCategoria(this.formCateg.value)
       .subscribe(
         res => {
-          this.form.nombre = '',
+          this.formCateg.reset();
           this.listCategorias();
+          this.submit = false;
         },
         err => console.log(err)
-      )
+      ) 
+
+    }
   }
 
   verModal(nombre_edit,id) {
@@ -57,19 +65,24 @@ export class AdminCategoriasComponent implements OnInit {
         $('#edit').focus()
       });
     });
-    this.form.nombre_edit = nombre_edit;
-    this.form.id = id;
+    this.id = id;
+    this.formCategEdit.patchValue({
+      nombre_edit:nombre_edit,
+    })
   }
 
-  editarCategoria(id) {
-    this.catgService.editarCategoria(id,this.form)
+  editarCategoria() {
+    this.submit = true;
+    if(!this.formCategEdit.invalid){
+     this.catgService.editarCategoria(this.id,this.formCategEdit.value)
       .subscribe(
         res => {
           $("#editModal .close").click()
           this.listCategorias();
         },
         err => console.log(err)
-      )
+      ) 
+    }
   }
 
   eliminarCategoria(id){

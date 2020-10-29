@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { ReactiveFormsModule} from "@angular/forms";
 
 
 import { AdminRoutingModule } from './admin-routing.module';
@@ -19,7 +19,6 @@ import { AdminCategoriasComponent } from './componentes/admin-categorias/admin-c
     CommonModule,
     AdminRoutingModule,
     ReactiveFormsModule,
-    FormsModule,
   ]
 })
 export class AdminModule { }

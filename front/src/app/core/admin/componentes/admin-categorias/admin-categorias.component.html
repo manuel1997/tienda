@@ -38,11 +38,20 @@
                       </button>
                     </div>
                     <div class="modal-body">
-                        <form (ngSubmit)="nuevaCategoria()">
+                        <form [formGroup]="formCateg" (ngSubmit)="nuevaCategoria()">
                             <div class="container">
-                                <div class="row">
-                            <input  type="text" [(ngModel)]="form.nombre" name="nombre" placeholder="nombre de categoria" class="form-control" >
+                            <div class="row">
+                            <input  type="text"
+                             formControlName="nombre"
+                              name="nombre"
+                               placeholder="nombre de categoria"
+                                class="form-control"
+                                [ngClass]="{'is-invalid':submit == true && formCateg.get('nombre').invalid }" >
+                                <div *ngIf="submit && formCateg.get('nombre').invalid " class="invalid-feedback">
+                                  Por favor rellene este campo!
+                              </div>
                         </div>
+                     
                         </div>
                             <button class="btn btn-primary mt-3">Agregar</button>
                           </form>
@@ -63,10 +72,18 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                    <form (ngSubmit)="editarCategoria(form.id)">
+                    <form [formGroup]="formCategEdit" (ngSubmit)="editarCategoria()">
                         <div class="container">
                             <div class="row">
-                        <input id="edit" type="text" [(ngModel)]="form.nombre_edit" name="nombre_edit" class="form-control" >
+                        <input id="edit" 
+                        type="text" 
+                        formControlName="nombre_edit" 
+                        name="nombre_edit"
+                         class="form-control"
+                         [ngClass]="{'is-invalid':submit == true && formCategEdit.get('nombre_edit').invalid }" >
+                         <div *ngIf="submit && formCategEdit.get('nombre_edit').invalid " class="invalid-feedback">
+                          Por favor rellene este campo!
+                      </div>
                     </div>
                     </div>
                         <button class="btn btn-primary mt-3">Editar</button>
