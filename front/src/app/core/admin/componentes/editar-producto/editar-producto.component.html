@@ -1,8 +1,7 @@
-<div class="container" *ngIf="!product[0]; else main_content">
+<!-- <div class="container" *ngIf="!product[0]; else main_content">
     <h1>loading....</h1>
-</div>
+</div> -->
 
-<ng-template #main_content>
 <div class="container">
     <div class="col-md-12 mx-auto">
         <div class="card text-center">
@@ -10,50 +9,78 @@
                 <h3>Editar Producto</h3>
             </div>
             <div class="card-body">
-                <form (ngSubmit)="actualizarProduct()">
+                <form [formGroup]="formProduct" (ngSubmit)="actualizarProduct()">
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="form-group">
-                                <input type="text" [(ngModel)]="product[0].titulo"  name="titulo" class="form-control" placeholder="Titulo">
+                                <input type="text" formControlName="titulo" name="titulo" class="form-control"
+                                    [ngClass]="{'is-invalid':submit == true && formProduct.get('titulo').invalid }"
+                                    placeholder="Titulo">
+                                <div *ngIf="submit && formProduct.get('titulo').invalid " class="invalid-feedback">
+                                    Por favor rellene este campo!
+                                </div>
                             </div>
                             <div class="form-group">
-                              <select class="custom-select" [(ngModel)]="product[0].categoria"  name="categoria">
-                                <option value="0" >Seleccione una Categoria</option>
-                                <option *ngFor="let categoria of categorias" value="{{categoria.id}}">{{categoria.nombre}}</option>
-                              </select>
+                                <select formControlName="categoria" name="categoria" class="custom-select"
+                                    [ngClass]="{'is-invalid':submit == true && formProduct.get('categoria').invalid }">
+                                    <option value="">Seleccione una Categoria</option>
+                                    <option *ngFor="let categoria of categorias" value="{{categoria.id}}">
+                                        {{categoria.nombre}}</option>
+                                </select>
+                                <div *ngIf="submit && formProduct.get('categoria').invalid " class="invalid-feedback">
+                                    Debe seleccionar una categoria!
+                                </div>
                             </div>
                             <div class="form-group">
-                                <textarea type="text" [(ngModel)]="product[0].especificaciones" name="especificaciones" class="form-control"
+                                <textarea type="text" formControlName="especificaciones" name="especificaciones"
+                                    class="form-control"
+                                    [ngClass]="{'is-invalid':submit == true && formProduct.get('especificaciones').invalid }"
                                     placeholder="Especificaciones"></textarea>
+                                <div *ngIf="submit && formProduct.get('especificaciones').invalid "
+                                    class="invalid-feedback">
+                                    Por favor rellene este campo!
+                                </div>
                             </div>
                             <div class="form-group">
-                                    <div class="input-group">
-                                      <div class="input-group-prepend">
-                                        <div class="input-group-text">$</div>
-                                      </div>
-                                      <input type="number" [(ngModel)]="product[0].precio" name="precio" class="form-control" placeholder="Precio">
-                                    </div>
+                                <input type="number" formControlName="precio" name="precio" class="form-control"
+                                    [ngClass]="{'is-invalid':submit == true && formProduct.get('precio').invalid }"
+                                    placeholder="Precio">
+                                <div *ngIf="submit && formProduct.get('precio').invalid " class="invalid-feedback">
+                                    Por favor rellene este campo!
+                                </div>
                             </div>
 
                             <div class="form-group">
-                                <input type="number" [(ngModel)]="product[0].stock" name="stock" class="form-control" placeholder="Stock">
+                                <input type="number" formControlName="stock" name="stock" class="form-control"
+                                    [ngClass]="{'is-invalid':submit == true && formProduct.get('stock').invalid }"
+                                    placeholder="Stock">
+                                <div *ngIf="submit && formProduct.get('stock').invalid " class="invalid-feedback">
+                                    Por favor rellene este campo!
+                                </div>
                             </div>
 
                         </div>
 
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="row">
-                                 <div *ngFor='let img of images' class="col-3">
-                                    <img src="http://localhost:3000/uploads/{{img.nombre_img}}" class="img-fluid" >
-                                </div> 
+                                <div *ngFor='let img of images' class="col-3">
+                                    <img src="http://localhost:3000/uploads/{{img.nombre_img}}" class="img-fluid">
+                                </div>
                             </div>
                         </div>
 
                     </div>
 
                     <div class="form-group">
-                        <textarea type="text" [(ngModel)]="product[0].descripcion" name="descripcion" class="form-control"
+                        <textarea type="text"
+                         formControlName="descripcion"
+                          name="descripcion"
+                           class="form-control"
+                           [ngClass]="{'is-invalid':submit == true && formProduct.get('descripcion').invalid }"
                             placeholder="Descripcion"></textarea>
+                            <div *ngIf="submit && formProduct.get('descripcion').invalid " class="invalid-feedback">
+                                Por favor rellene este campo!
+                            </div>
                     </div>
 
                     <div class="form-group">
@@ -66,4 +93,3 @@
         </div>
     </div>
 </div>
-</ng-template>
