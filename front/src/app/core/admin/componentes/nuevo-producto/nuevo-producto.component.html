@@ -70,8 +70,9 @@
                                 </p>
                             </div>
                             <div class="row">
-                                <div *ngFor='let url of urls' class="col-3">
+                                <div *ngFor='let url of urls; index as i' class="col-3">
                                     <img [src]="url" class="img-fluid p-1">
+                                    <button type="button" (click)="quitarImage(i,url)">eliminar</button>
                                 </div>
                             </div>
                         </div>

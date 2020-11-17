@@ -1,0 +1,12 @@
+<div class="mb-5 mt-5">
+    <h3 class="border-bottom border-gray mb-4">Categorias principales</h3>
+    
+      <form [formGroup]="catgFormPrincipal" (ngSubmit)="actualizarBanner()">
+    <div *ngFor="let ctp of ctgPrincipal" class="form-group">
+        <select class="form-control" formControlName="id_categoria{{ctp.id}}" name="id_categoria{{ctp.id}}" (change)="editarCatgPrincipal(ctp.id)" >
+          <option *ngFor="let categ of categorias" value="{{categ.id}}">{{categ.nombre}}</option>
+        </select>
+    </div>
+</form>
+  
+  </div>

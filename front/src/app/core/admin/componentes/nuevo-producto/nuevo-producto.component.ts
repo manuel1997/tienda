@@ -60,9 +60,15 @@ export class NuevoProductoComponent implements OnInit {
       reader.readAsDataURL(event.target.files[i]);
 
       this.fileList.push(selectedFile);
+      console.log(this.fileList);
 
     }
 
+  }
+
+  quitarImage(index: number, url: any) {
+    this.fileList.splice(index, 1);
+    this.urls.splice(url, 1);
   }
 
 

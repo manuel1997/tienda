@@ -16,6 +16,7 @@ bannerController.listBanner = async (req,res) =>{
 }
 
 bannerController.insertBanner = async (req,res) => {
+
   const img = req.files[0].filename;
 
   const { titulo, descripcion, btn,} = req.body;
@@ -27,11 +28,25 @@ bannerController.insertBanner = async (req,res) => {
     }) 
 }
 
+bannerController.verBanner = async (req,res) => {
+
+  const {id} = req.params;
+    
+  const sql = `select * from  banners where id = ${id}`
+    mysqlConecction.query(sql,(error,result) => {
+      if(error) throw error;
+      res.json(result);
+  })
+
+}
+
 bannerController.actualizarBanner = async (req,res) =>{
 
+  const {id} = req.params;
   const {titulo,descripcion,btn} = req.body
+
   const banner = {titulo,descripcion,btn};
-  const sql = `update from banners set ?`
+  const sql = `update banners set ? where id = ${id}`
   mysqlConecction.query(sql,banner,error =>{
     if(error) throw error;
     res.json('banner actualizado')
