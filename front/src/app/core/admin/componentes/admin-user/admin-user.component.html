@@ -1,0 +1,141 @@
+<div class="container">
+  <button type="button" class="btn btn-info btn-rounded float-right" data-toggle="modal"
+    data-target="#insertModal">Nuevo<i class="fa fa-plus"></i></button>
+  <h3 class="border-bottom border-gray pb-2 mb-4 ">Administradores</h3>
+  <div class="mx-auto">
+    <div class="card">
+      <ul class="list-group">
+        <li *ngFor="let admin of admins" class="list-group-item">
+          <strong>{{admin.nombre}} {{admin.apellido}} - {{admin.usuario}} </strong>
+          <div  class="btn-group float-right">
+            <button  (click)="verModal(admin.id,admin.nombre,admin.apellido,admin.usuario)"  class="btn btn-warning btn-sm" title="Editar"><i class="fa fa-pencil"></i></button>
+            <button (click)="eliminarAdmin(admin.id)" class="btn btn-danger btn-sm float-right"><i  class="fa fa-trash"></i></button>
+        </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="insertModal" tabindex="-1" role="dialog" aria-labelledby="insertModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="insertModalLabel">Agregar admin</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="formAdmin" (ngSubmit)="insertAdmin()">
+          <div class="container">
+
+            <div class="row">
+
+              <div class="form-group col-md-6">
+                <input type="text" formControlName="nombre" name="nombre" placeholder="Nombre" class="form-control"
+                  [ngClass]="{'is-invalid':submit == true && formAdmin.get('nombre').invalid }">
+                <div *ngIf="submit && formAdmin.get('nombre').invalid " class="invalid-feedback">
+                  Por favor rellene este campo!
+                </div>
+              </div>
+
+              <div class="form-group col-md-6">
+                <input type="text" formControlName="apellido" name="apellido" placeholder="Apellido"
+                  class="form-control" [ngClass]="{'is-invalid':submit == true && formAdmin.get('apellido').invalid }">
+                <div *ngIf="submit && formAdmin.get('apellido').invalid " class="invalid-feedback">
+                  Por favor rellene este campo!
+                </div>
+              </div>
+
+            </div>
+
+            <div class="form-group">
+              <input type="text" formControlName="usuario" name="usuario" placeholder="Usuario" class="form-control"
+                [ngClass]="{'is-invalid':submit == true && formAdmin.get('usuario').invalid }">
+              <div *ngIf="submit && formAdmin.get('usuario').invalid " class="invalid-feedback">
+                Por favor rellene este campo!
+              </div>
+            </div>
+
+            <div class="form-group">
+              <input type="password" formControlName="clave" name="clave" placeholder="Clave" class="form-control"
+                [ngClass]="{'is-invalid':submit == true && formAdmin.get('clave').invalid }">
+              <div *ngIf="submit && formAdmin.get('clave').invalid " class="invalid-feedback">
+                La clave debe contener almenos 4 caracteres!
+              </div>
+            </div>
+
+            <button class="btn btn-primary mt-3">Agregar</button>
+          </div>
+         
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ModalEdit -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModallLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModallLabel">Editar admin</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="formAdminEdit" (ngSubmit)="actualizarAdmin(id_edit)">
+          <div class="container">
+
+            <div class="row">
+
+              <div class="form-group col-md-6">
+                <input type="text" formControlName="nombre" name="nombre" placeholder="Nombre" class="form-control"
+                  [ngClass]="{'is-invalid':submit == true && formAdminEdit.get('nombre').invalid }">
+                <div *ngIf="submit && formAdminEdit.get('nombre').invalid " class="invalid-feedback">
+                  Por favor rellene este campo!
+                </div>
+              </div>
+
+              <div class="form-group col-md-6">
+                <input type="text" formControlName="apellido" name="apellido" placeholder="Apellido"
+                  class="form-control" [ngClass]="{'is-invalid':submit == true && formAdminEdit.get('apellido').invalid }">
+                <div *ngIf="submit && formAdminEdit.get('apellido').invalid " class="invalid-feedback">
+                  Por favor rellene este campo!
+                </div>
+              </div>
+
+            </div>
+
+            <div class="form-group">
+              <input type="text" formControlName="usuario" name="usuario" placeholder="Usuario" class="form-control"
+                [ngClass]="{'is-invalid':submit == true && formAdminEdit.get('usuario').invalid }">
+              <div *ngIf="submit && formAdminEdit.get('usuario').invalid " class="invalid-feedback">
+                Por favor rellene este campo!
+              </div>
+            </div>
+
+            <div class="form-group">
+              <input type="password" formControlName="clave" name="clave" placeholder="Clave" class="form-control"
+                [ngClass]="{'is-invalid':submit == true && formAdminEdit.get('clave').invalid }">
+              <div *ngIf="submit && formAdminEdit.get('clave').invalid " class="invalid-feedback">
+                La clave debe contener almenos 4 caracteres!
+              </div>
+            </div>
+
+            <button class="btn btn-primary mt-3">Actualizar</button>
+
+          </div>
+         
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

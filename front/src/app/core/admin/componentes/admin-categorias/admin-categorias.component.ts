@@ -90,7 +90,8 @@ export class AdminCategoriasComponent implements OnInit {
     .subscribe(
       res => {
         this.listCategorias();
-      }
+      },
+      err => console.log(err)
     )
   }
 

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ProductoService} from "../../servicios/producto.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
+import {PagintateService} from "../../servicios/paginate.service"
 
 
 @Component({
@@ -10,26 +11,40 @@ import {Router} from "@angular/router";
 })
 export class AdminProductoComponent implements OnInit {
 
+  pagina:number;
+  numpage:number;
+  pagSig:number;
+  pager: any = {};
+
   products = []
   categorias = []
 
   constructor(
+    private activateRoute:ActivatedRoute,
     private productService:ProductoService,
-    private router:Router
-    ) { }
+    private router:Router,
+    private paginate:PagintateService
+    ) {
+     
+     }
 
   ngOnInit() {
-    this.listProduct();
+    this.listProduct();    
   }
 
   listProduct(){
-    this.productService.listProducto(this.products)
+    this.activateRoute.params.subscribe(params => {
+      this.pagina = params['page'];
+    this.productService.listProducto(this.pagina,this.products)
     .subscribe(
       res =>{
-        this.products = res;
+        this.numpage = res['numPages'];
+        this.products = res['products'];
+        this.paginado(this.pagina);
       },
       err => console.log(err)
     )
+    })
   }
 
   editProduct(id){
@@ -44,6 +59,11 @@ export class AdminProductoComponent implements OnInit {
       },
       err => console.log(err)
     )
+  }
+
+  paginado(page: number) {    
+    this.pagSig = Number(page) + 1;
+    this.pager = this.paginate.getPager(this.numpage,page);
   }
 
 }

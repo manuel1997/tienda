@@ -1,10 +1,19 @@
 <div class="container">
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-5">
-        <a class="navbar-brand" href="">Administrador</a>
+
+      <div class="dropdown">
+        <a style="font-size:medium;" class="navbar-brand dropdown-toggle" role="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user-circle"></i> {{admin_nombre}} {{admin_apellido}}</a>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a style="cursor: pointer;" class="dropdown-item" (click)="salir()" >Salir</a>
+        </div>
+      </div>
+      
+       
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
+
       
         <div class="collapse navbar-collapse" id="navbarColor01">
           <ul class="navbar-nav ml-auto">
@@ -12,13 +21,13 @@
               <a class="nav-link" routerLink="/admin/banner">Banner</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" routerLink="/admin">Productos</a>
+              <a class="nav-link" routerLink="/admin/productos/1">Productos</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" routerLink="/admin/categorias">Categorias</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Administradores</a>
+              <a class="nav-link" routerLink="/admin/administradores">Administradores</a>
             </li>
           </ul>
         </div>

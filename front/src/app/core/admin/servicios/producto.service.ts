@@ -23,8 +23,8 @@ export class ProductoService {
     return this.http.post<any>(this.api+'insertProduct',fd);
   }
 
-  listProducto(product){
-    return this.http.get<any>(this.api+'listProduct');
+  listProducto(page,product){
+    return this.http.get<any>(this.api+`listProduct/${page}`);
   }
 
   verProducto(id){

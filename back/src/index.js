@@ -16,10 +16,10 @@ app.use(express.urlencoded({extended:false}));
 
  app.use(function (req, res, next) {
 
-    if(req.path == '/api/insertBanner'){
-        imgruta =  path.join(__dirname,'public/banners')
-    }else{
+    if(req.path == '/api/insertProduct'){
         imgruta =  path.join(__dirname,'public/uploads')
+    }else{
+        imgruta =  path.join(__dirname,'public/banners')
     } 
     next();
   });

@@ -23,7 +23,7 @@
 
                             <div class="form-group">
                                <input type="file" formControlName="images" name="images" class="btn btn-secondary btn-block" (change)="onPhotoselected($event)">
-                               <img  src="http://localhost:3000/banners/{{image}}" class="img-fluid p-2" style="width:800px; height: 250px;">
+                               <img  [src]=" photoSelected || 'http://localhost:3000/banners/'+image" class="img-fluid p-2" style="width:800px; height: 250px;">
                             </div>
                            
                         </div>

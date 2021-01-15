@@ -28,8 +28,13 @@ export class BannerService {
     return this.http.get(this.api+'verBanner/'+id)
   }
 
-  actualizarBanner(id,banner){
-    return this.http.put(this.api+'actualizarBanner/'+id,banner)
+  actualizarBanner(id,banner,file){
+    const fd =  new FormData();
+    fd.append('titulo',banner.titulo);
+    fd.append('descripcion',banner.descripcion);
+    fd.append('btn',banner.btn);
+    fd.append('images',file);
+    return this.http.put(this.api+'actualizarBanner/'+id,fd)
   }
 
   eliminarBanner(id){

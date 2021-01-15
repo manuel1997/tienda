@@ -13,6 +13,9 @@ export class EditarBannerComponent implements OnInit {
   id: number
   image:string;
 
+  file:File;
+  photoSelected: string | ArrayBuffer;
+
   formEditBanner = new FormGroup({
     titulo: new FormControl(''),
     descripcion: new FormControl(''),
@@ -22,8 +25,9 @@ export class EditarBannerComponent implements OnInit {
 
   constructor(
     private bannnerService:BannerService,
-    private activateRoute: ActivatedRoute
+    private activateRoute: ActivatedRoute,
     ) { }
+
 
   ngOnInit() {
     this.verBanner();
@@ -46,8 +50,18 @@ export class EditarBannerComponent implements OnInit {
     })
   }
 
+  onPhotoselected(event): void{
+    if (event.target.files && event.target.files[0]){
+      this.file = <File>event.target.files[0];
+      //Image preview
+      const reader = new FileReader();
+      reader.onload = e => this.photoSelected = reader.result;
+      reader.readAsDataURL(this.file);
+    }
+  }
+
   actualizarBanner(){
-    this.bannnerService.actualizarBanner(this.id,this.formEditBanner.value)
+    this.bannnerService.actualizarBanner(this.id,this.formEditBanner.value,this.file)
     .subscribe(
       res => {
         console.log(res)

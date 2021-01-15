@@ -6,15 +6,32 @@ const productController = {}
 const mysqlConecction = require('../../db');
 
 
-productController.listProduct = async (req,res) =>{
-    
-    const sql = `SELECT productos.*, productos_img.nombre_img 
-    FROM productos 
-    INNER JOIN productos_img on productos.id = productos_img.id GROUP BY productos.id`
-    mysqlConecction.query(sql, (error,result) => {
-        if(error) throw error;
-        res.json(result)
-    })
+productController.listProduct = async (req, res) => {
+
+    const page = req.params.page || 1;
+    const numPerPage = 10;
+    const skip = (page - 1) * numPerPage;
+
+    const sql1 = 'SELECT count(*) as numRows FROM productos';
+    await mysqlConecction.query(sql1, (error, rows) => {
+        if (error) throw error;
+        const numRows = rows[0].numRows;
+        const numPages = Math.ceil(numRows / numPerPage);
+        const sql2 = `SELECT productos.*, productos_img.nombre_img FROM productos right JOIN productos_img on productos.id = productos_img.id GROUP BY productos.id  LIMIT ${skip}, ${numPerPage}`
+        mysqlConecction.query(sql2, (error, products) => {
+            if (error) throw error;
+            res.json({page,products,numPages});
+        });
+    });
+
+
+    /*   const sql = `SELECT productos.*, productos_img.nombre_img 
+      FROM productos 
+      INNER JOIN productos_img on productos.id = productos_img.id GROUP BY productos.id`
+      mysqlConecction.query(sql, (error,result) => {
+          if(error) throw error;
+          res.json(result)
+      }) */
 
 }
 
@@ -22,8 +39,8 @@ productController.listProduct = async (req,res) =>{
 productController.insertProduct = async (req, res) => {
 
 
-    const { titulo, categoria, especificaciones, precio, stock, descripcion} = req.body;
-    
+    const { titulo, categoria, especificaciones, precio, stock, descripcion } = req.body;
+
     const sql = 'INSERT INTO productos SET ?';
     const producto = { titulo, categoria, especificaciones, precio, stock, descripcion }
     await mysqlConecction.query(sql, producto, (error, result) => {
@@ -40,54 +57,54 @@ productController.insertProduct = async (req, res) => {
             if (error) throw error;
             res.json('producto registrado')
         });
-    }); 
+    });
 
 
-  /*   await mysqlConecction.query(sql, producto, (error, result) => {
-        if (error) throw error;
-        let insertid = result.insertId;
-
-        filenames = req.files.map(function (file) {
-            return [insertid, file.filename]
-        });
-
-        let sql2 = `insert into productos_img (id, nombre_img) VALUES ?`;
-        mysqlConecction.query(sql2, [filenames], error => {
-            if (error) throw error;
-            res.send('producto registrado')
-        });
-    }); */
+    /*   await mysqlConecction.query(sql, producto, (error, result) => {
+          if (error) throw error;
+          let insertid = result.insertId;
+  
+          filenames = req.files.map(function (file) {
+              return [insertid, file.filename]
+          });
+  
+          let sql2 = `insert into productos_img (id, nombre_img) VALUES ?`;
+          mysqlConecction.query(sql2, [filenames], error => {
+              if (error) throw error;
+              res.send('producto registrado')
+          });
+      }); */
 
 }
 
 
-productController.editProduct = async (req,res) => {
-
-    const {id} = req.params;
-    
-    const sql = `select * from  productos where id = ${id}`
-    mysqlConecction.query(sql,(error,result) => {
-        if(error) throw error;
-        const sql2 = `select * from  productos_img where id = ${id}`
-        mysqlConecction.query(sql2,(error,result2) => {
-            if(error) throw error;
-
-            res.json({result,result2});
-        })
-    })
-
-   
-}
-
-productController.actualizarProduct = async (req,res) =>{
+productController.editProduct = async (req, res) => {
 
     const { id } = req.params;
 
-    const { titulo, categoria, especificaciones, stock, precio, descripcion} = req.body;
-    const producto = { titulo, categoria, especificaciones, stock, precio, descripcion}
+    const sql = `select * from  productos where id = ${id}`
+    mysqlConecction.query(sql, (error, result) => {
+        if (error) throw error;
+        const sql2 = `select * from  productos_img where id = ${id}`
+        mysqlConecction.query(sql2, (error, result2) => {
+            if (error) throw error;
+
+            res.json({ result, result2 });
+        })
+    })
+
+
+}
+
+productController.actualizarProduct = async (req, res) => {
+
+    const { id } = req.params;
+
+    const { titulo, categoria, especificaciones, stock, precio, descripcion } = req.body;
+    const producto = { titulo, categoria, especificaciones, stock, precio, descripcion }
     const sql = `update productos set ? where id = ${id}`;
-    await mysqlConecction.query(sql,producto, error => {
-        if(error) throw error;
+    await mysqlConecction.query(sql, producto, error => {
+        if (error) throw error;
         res.json('producto atualizado');
     })
 
@@ -107,7 +124,7 @@ productController.deleteProduct = async (req, res) => {
             results.map(r => {
                 fs.unlinkSync(path.resolve('./src/public/uploads/' + r.nombre_img));
             })
-            
+
             const sql3 = `delete from productos_img  where id = ${id}`;
             mysqlConecction.query(sql3, error => {
                 if (error) throw error;

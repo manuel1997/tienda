@@ -14,15 +14,36 @@ import { AdminBannerComponent } from './componentes/admin-banner/admin-banner.co
 import { NuevoBannerComponent } from './componentes/nuevo-banner/nuevo-banner.component';
 import { EditarBannerComponent } from './componentes/editar-banner/editar-banner.component';
 import { AdminCategoriaPrincipalComponent } from './componentes/admin-categoria-principal/admin-categoria-principal.component';
+import { AdminUserComponent } from './componentes/admin-user/admin-user.component';
+import { AdminLoginComponent } from './componentes/admin-login/admin-login.component';
+
+import { AuthGuard } from './auth.guard';
+
 
 
 
 @NgModule({
-  declarations: [AdminNabvarComponent, AdminOutletComponent, AdminProductoComponent, NuevoProductoComponent, EditarProductoComponent, AdminCategoriasComponent, AdminBannerComponent, NuevoBannerComponent, EditarBannerComponent, AdminCategoriaPrincipalComponent ],
+  declarations: [
+    AdminNabvarComponent,
+     AdminOutletComponent,
+      AdminProductoComponent,
+       NuevoProductoComponent,
+        EditarProductoComponent,
+         AdminCategoriasComponent,
+          AdminBannerComponent,
+           NuevoBannerComponent,
+            EditarBannerComponent,
+             AdminCategoriaPrincipalComponent,
+             AdminUserComponent,
+             AdminLoginComponent
+             ],
   imports: [
     CommonModule,
     AdminRoutingModule,
     ReactiveFormsModule,
+  ],
+  providers:[
+    AuthGuard,
   ]
 })
 export class AdminModule { }

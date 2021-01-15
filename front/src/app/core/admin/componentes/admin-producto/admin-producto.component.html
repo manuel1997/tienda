@@ -25,4 +25,31 @@
     </div>
   </div>
 
+
+
+  <div class="row  mt-5 mb-4">
+    <nav class="mx-auto">
+      <ul *ngIf="pagina" class="pagination ">
+        <li [ngClass]="{ disabled: pagina == 1 }" class="page-item d-none d-sm-none d-md-block">
+          <a class="page-link" routerLink="/admin/productos/1" >Primera</a>
+        </li>
+        <li [ngClass]="{ disabled: pagina == 1 }" class="page-item">
+          <a class="page-link" [routerLink]="['/admin/productos/',pagina-1]" >Ant.</a>
+        </li>
+        <li *ngFor="let page of pager.pages" [ngClass]="{ active: page == pagina }" class="page-item">
+          <a class="page-link" [routerLink]="['/admin/productos/',page]" >{{ page }}</a>
+        </li>
+        <li [ngClass]="{ disabled: pagina == numpage }" class="page-item">
+          <a class="page-link" [routerLink]="['/admin/productos/',pagSig]">Sig.</a>
+        </li>
+        <li [ngClass]="{ disabled: pagina == numpage }" class="page-item d-none d-sm-none d-md-block">
+          <a class="page-link" [routerLink]="['/admin/productos/',numpage]" >Ultima</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+
+
 </div>
+
